@@ -1,0 +1,7 @@
+.card__like-button {
+  border: 0;
+  background-color: #fff;
+  padding: 0;
+  margin-top: 5px;
+  cursor: pointer;
+}
