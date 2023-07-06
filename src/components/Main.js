@@ -1,10 +1,16 @@
 export function Main() {
 
-  // handleEditAvatarClick
+  function handleEditAvatarClick() {
+    document.querySelector('.popup_update_avatar').classList.add('popup_opened')
+  }
 
-  // handleEditProfileClick  
+  function handleEditProfileClick() {
+    document.querySelector('.popup_edit-profile').classList.add('popup_opened')
+  }  
 
-  // handleAddPlaceClick
+  function handleAddPlaceClick() {
+    document.querySelector('.popup_new-card').classList.add('popup_opened')
+  }
 
 
   return (
@@ -12,16 +18,16 @@ export function Main() {
     
     <section className="profile">
       <div className="profile__avatar">
-        <img src="./images/avatar_edit-button.svg" alt="аватарка пользователя" className="edit-icon profile__avatar_edit-button"/>
+        <img onClick={handleEditAvatarClick} src="./images/avatar_edit-button.svg" alt="аватарка пользователя" className="edit-icon profile__avatar_edit-button"/>
         <img src="./images/avatar_photo.png" alt="аватарка пользователя" className="profile__avatar-img"/>
       </div>
         <div className="profile__info">
          <h1 className="profile__title">Жак-Ив Кусто</h1>
-         <button type="button" className="profile__edit-button" aria-label="кнопка редактирования"></button>
+         <button type="button" onClick={handleEditProfileClick} className="profile__edit-button" aria-label="кнопка редактирования"></button>
          <p className="profile__subtitle">Исследователь океана</p>
        </div>
       
-      <button type="button" className="profile__add-button"></button>
+      <button type="button" className="profile__add-button" onClick={handleAddPlaceClick}></button>
     </section>
 
     <section className="cards" aria-label="Секция с карточками">
