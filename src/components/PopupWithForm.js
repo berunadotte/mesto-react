@@ -1,26 +1,30 @@
 import closePopupButton from '../images/popup_close_button.svg'
 
 
-export function PopupWithForm (props) {
+export default function PopupWithForm ({
+  name,
+  title,
+  buttonName,
+  children,
+}) {
 
 
 
   return (
         <>
-        <div className={`popup popup_${props.name}`}>
+        <div className={`popup popup_${name}`}>
           <div className="popup__container">
-            <h2 className="popup__header">{props.title}</h2>
+            <h2 className="popup__header">{title}</h2>
 
-            {/* <form className={`popup__form popup__form_${props.name}`} name={`popup__form_${props.name}`} noValidate> */}
-
-            <form action="#" name="add-form" className="popup__main" noValidate>
-             <fieldset className="popup__info">{children}</fieldset>
-
-
+            <form className={`popup__form popup__form_${name}`} name={name} noValidate>
+              {children}
+              <button type="submit" className="button popup__button submit-button">
+                {buttonName}
+             </button>
             </form>
 
             <button type="button" className="popup__close-button">
-              <img src={closePopupButton} alt="кнопка закрытия" className="popup__close-icon"/>
+                <img src={closePopupButton} alt="кнопка закрытия" className="popup__close-icon"/>
             </button>
           </div>
         </div>
