@@ -1,5 +1,24 @@
+import React, {useEffect, useState} from 'react';
+import { apiMesto } from '../utils/api.js';
+
+
 export function Main( { onEditProfile, onAddPlace, onEditAvatar }) {
 
+  const [userName, setUserName] = React.useState('')
+  const [userDescription, setUserDescription] = React.useState('')
+  const [userAvatar, setUserAvatar] = React.useState('')
+
+  useEffect(() => {
+    Promise.all([apiMesto.loadNameAndInfo(), apiMesto.getInitialCards()])
+    .then(([userData, cardsData]) => {
+      setUserName(userData.name)
+      setUserDescription(userData.about)
+      setUserAvatar(userData.avatar)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  })
 
 
 
@@ -8,8 +27,8 @@ export function Main( { onEditProfile, onAddPlace, onEditAvatar }) {
     
     <section className="profile">
       <div className="profile__avatar">
-        <img onClick={onEditProfile} src="./images/avatar_edit-button.svg" alt="аватарка пользователя" className="edit-icon profile__avatar_edit-button"/>
-        <img src="./images/avatar_photo.png" alt="аватарка пользователя" className="profile__avatar-img"/>
+        <button type='button' aria-label='Сменить аватар' onClick={onEditProfile} className="edit-icon profile__avatar_edit-button"/>
+        <img src={userAvatar} alt="аватарка пользователя" className="profile__avatar-img"/>
       </div>
         <div className="profile__info">
          <h1 className="profile__title">Жак-Ив Кусто</h1>

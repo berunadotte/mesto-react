@@ -2,4 +2,6 @@
   border-radius: 60px;
   width: 120px;
   height: 120px;
+  background: transparent;
+  background-size: 120px;
 }

@@ -2,6 +2,8 @@
   width: 32px;
   height: 32px;
   position: absolute;
+  background-color: transparent;
+  background-image: url(../../../images/popup_close_button.svg);
   top: 0;
   right: 0;
   transform: translate(40px, -40px);

@@ -1,5 +1,3 @@
-import closePopupButton from '../images/popup_close_button.svg'
-
 
 export default function PopupWithForm ({ name, title, buttonName, buttonType, children, isOpen, onClose}) {
 
@@ -16,9 +14,7 @@ export default function PopupWithForm ({ name, title, buttonName, buttonType, ch
              </button>
             </form>
 
-            <button type="button" className="popup__close-button" onClick={onClose}>
-                <img src={closePopupButton} alt="кнопка закрытия" className="popup__close-icon"/>
-            </button>
+            <button type="button" className="popup__close-button" onClick={onClose}></button>
           </div>
         </div>
         </>
