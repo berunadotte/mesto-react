@@ -10,6 +10,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
+  const [selectedCard, setSelectedCard] = React.useState({})
+  const [isOpenImage, setIsOpenImage] = React.useState(false)
 
   function handleEditAvatarClick() {
     setIsEditProfilePopupOpen(true)
@@ -27,14 +29,20 @@ function App() {
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
     setIsEditProfilePopupOpen(false)
+    setSelectedCard({})
+    setIsOpenImage(false)
+  }
 
+  function handleCardClick(card) {
+    setSelectedCard(card)
+    setIsOpenImage(true)
   }
 
   return (
       <div className="root">
     
       <Header/>
-      <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick}   />
+      <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick}   />
       <Footer/>
 
       <PopupWithForm title='Редактировать профиль' name='edit-profile' isOpen={isEditProfilePopupOpen} buttonName='Сохранить' buttonType='save' onClose={closeAllPopup}>
@@ -57,12 +65,12 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm title='Вы уверены?' name='before_deleting' buttonName='Вы уверены' onClose={closeAllPopup}>
-      <h2 className="popup__header">Вы уверены?</h2>
-          <button type="submit" className="popup__delete-button submit-button">Да</button>
+        <h2 className="popup__header">Вы уверены?</h2>
+        <button type="submit" className="popup__delete-button submit-button">Да</button>
         <button type="button" className="popup__close-button"></button>
       </PopupWithForm>
 
-      <ImagePopup/>
+      <ImagePopup card={selectedCard} onClose={closeAllPopup} isOpen={isOpenImage} />
 
       </div>
   

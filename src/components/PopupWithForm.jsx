@@ -10,7 +10,7 @@ export default function PopupWithForm ({ name, title, buttonName, buttonType, ch
               {children}
               <button type="submit" className={`popup__button popup__${buttonType}-button submit-button`}>
                 {buttonName}
-             </button>
+              </button>
             </form>
 
             <button type="button" className="popup__close-button" onClick={onClose}></button>

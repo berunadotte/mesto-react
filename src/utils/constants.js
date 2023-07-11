@@ -43,11 +43,3 @@ export const validationConfig = {
   inputErrorClass: 'popup__input_type_error',
   formSelector: '.popup__form',
 }
-
-export const apiOptions = {
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
-  headers: {
-    authorization: '432e3bdb-dcc8-4c2f-864d-6bca425811a2',
-    'Content-Type': 'application/json; charset=UTF-8',
-  },
-}
