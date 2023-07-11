@@ -31,8 +31,6 @@ function App() {
   }
 
   return (
-
-
       <div className="root">
     
       <Header/>
@@ -53,8 +51,6 @@ function App() {
         <span className="popup__form-input-error image-link-input-error"></span>
       </PopupWithForm>
       
-
-
       <PopupWithForm title='Обновить аватар' name='update_avatar'  buttonName='Сохранить' buttonType='save' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopup}>
         <input type="url" name="popup__avatar_link" className="popup__input popup__input_avatar-link-value" placeholder="Ссылка на аватар" required id="avatar-link-input"/>
         <span className="popup__form-input-error avatar-link-input-error"></span>

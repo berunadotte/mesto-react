@@ -1,6 +1,8 @@
 .profile__avatar {
   border-radius: 60px;
   position: relative;
+  transition: 0.4s;
+
 }
 
 .profile__avatar:hover::after {
@@ -13,8 +15,11 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 1;
   cursor: pointer;
+  transition: 0.4s;
 }
 
 .profile__avatar:hover .profile__avatar_edit-button {
   display: block;
+  transition: 0.4s;
+
 }
