@@ -23,7 +23,7 @@ export function Main( { onEditProfile, onAddPlace, onEditAvatar, onCardClick }) 
     .catch((err) => {
       console.log(err)
     })
-  })
+  }, [])
 
   return (
     <main className="main">
@@ -47,7 +47,7 @@ export function Main( { onEditProfile, onAddPlace, onEditAvatar, onCardClick }) 
     <section className="cards" aria-label="Секция с карточками">
       <ul className="cards__list">
         {cards.map((data) => (
-          < Card card={data} onCardClick={onCardClick} />
+          < Card card={data} onCardClick={onCardClick} key={data._id} />
         ))}
       </ul>
     </section>
