@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Header } from './Header.jsx';
 import { Main } from './Main.jsx';
 import { Footer } from './Footer.jsx';
+import avatar from '../images/avatar_photo.png'
 import  PopupWithForm from './PopupWithForm.jsx';
 import ImagePopup from './ImagePopup.jsx';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { apiMesto } from '../utils/api.js';
 
 function App() {
 
@@ -13,6 +15,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false)
   const [selectedCard, setSelectedCard] = React.useState({})
   const [isOpenImage, setIsOpenImage] = React.useState(false)
+  const [cards, setCards] = React.useState([]);
   const [currentUser, setCurrentUser] = React.useState({
     name: 'Жак Ив Кусто',
     about: 'Исследователь океана',
@@ -44,12 +47,38 @@ function App() {
     setIsOpenImage(true)
   }
 
+  function handleCardDelete(id) {
+    apiMesto.removeCard(id).then(() => {
+			setCards((cards) => cards.filter((c) => c._id !== id));
+		}).catch((err) => {
+      console.log(err)
+  })
+  }
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    apiMesto.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
+        setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c))
+    }).catch((err) => {
+      console.log(err)
+  })
+  }
+
   React.useEffect(() => {
-    api.getUserInfo().then((data) => {
+    apiMesto.loadNameAndInfo().then((data) => {
       setCurrentUser(data)
     }).catch((err) => {
       console.log(err)
     })
+
+    apiMesto.getInitialCards().then((data) => {
+			setCards(data);
+    }).catch((err) => {
+      console.log(err)
+      })
   }, [])
 
   return (
@@ -58,7 +87,15 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
 
       <Header/>
-      <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick}   />
+      <Main 
+        cards={cards}
+        onEditProfile={handleEditProfileClick} 
+        onEditAvatar={handleEditAvatarClick} 
+        onAddPlace={handleAddPlaceClick} 
+        onCardClick={handleCardClick} 
+        onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
+      />
       <Footer/>
 
       <PopupWithForm title='Редактировать профиль' name='edit-profile' isOpen={isEditProfilePopupOpen} buttonName='Сохранить' buttonType='save' onClose={closeAllPopup}>
@@ -89,7 +126,7 @@ function App() {
       <ImagePopup card={selectedCard} onClose={closeAllPopup} isOpen={isOpenImage} />
 
       </CurrentUserContext.Provider>
-      
+
       </div>
   
   );
