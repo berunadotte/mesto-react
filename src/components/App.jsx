@@ -64,9 +64,10 @@ function App() {
 			//.finally(() => setIsLoading(false));
 	}
 
-  function handleProfileFormSubmit(inputValues) {
+  function handleUpdateUser(inputValues) {
 		function makeRequest() {
-			return apiMesto.changeNameAndInfo(inputValues).then(setCurrentUser)
+			return apiMesto.changeNameAndInfo(inputValues.name, inputValues.about).then(setCurrentUser)
+      console.log('hjghg');
 		}
 		handleSubmit(makeRequest);
 	}
@@ -114,7 +115,7 @@ function App() {
       />
       <Footer/>
 
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopup} onUpdateUser={handleProfileFormSubmit} />
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopup} onUpdateUser={handleUpdateUser} />
 
       <PopupWithForm title='Новое место' name='new-card' buttonName='Добавить' buttonType='create' isOpen={isAddPlacePopupOpen} onClose={closeAllPopup}>
         <input type="text" name="popup__card_name" className="popup__input popup__input_card-name-value" placeholder="Название" required minLength="2" maxLength="30" id="card-name-input"/>
