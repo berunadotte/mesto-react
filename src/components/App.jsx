@@ -7,6 +7,7 @@ import  PopupWithForm from './PopupWithForm.jsx';
 import ImagePopup from './ImagePopup.jsx';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { apiMesto } from '../utils/api.js';
+import EditProfilePopup from './EditProfilePopup.jsx';
 
 function App() {
 
@@ -55,6 +56,21 @@ function App() {
   })
   }
 
+  function handleSubmit(request) {
+		//setIsLoading(true);
+		request()
+			.then(closeAllPopup)
+			.catch(console.error)
+			//.finally(() => setIsLoading(false));
+	}
+
+  function handleProfileFormSubmit(inputValues) {
+		function makeRequest() {
+			return apiMesto.changeNameAndInfo(inputValues).then(setCurrentUser)
+		}
+		handleSubmit(makeRequest);
+	}
+
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -98,12 +114,7 @@ function App() {
       />
       <Footer/>
 
-      <PopupWithForm title='Редактировать профиль' name='edit-profile' isOpen={isEditProfilePopupOpen} buttonName='Сохранить' buttonType='save' onClose={closeAllPopup}>
-        <input type="text" name="popup__name" className="popup__input popup__input_name-value" placeholder="Введи своё имя" required minLength="2" maxLength="40" id="name-input"/>
-        <span className="popup__form-input-error name-input-error"></span>
-        <input type="text" name="popup__job" className="popup__input popup__input_job-value" placeholder="Введи свою профессию" required minLength="2" maxLength="200" id="job-input"/>
-        <span className="popup__form-input-error job-input-error"></span>
-      </PopupWithForm>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopup} onUpdateUser={handleProfileFormSubmit} />
 
       <PopupWithForm title='Новое место' name='new-card' buttonName='Добавить' buttonType='create' isOpen={isAddPlacePopupOpen} onClose={closeAllPopup}>
         <input type="text" name="popup__card_name" className="popup__input popup__input_card-name-value" placeholder="Название" required minLength="2" maxLength="30" id="card-name-input"/>

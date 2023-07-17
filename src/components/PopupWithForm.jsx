@@ -1,4 +1,4 @@
-export default function PopupWithForm ({ name, title, buttonName, buttonType, children, isOpen, onClose}) {
+export default function PopupWithForm ({ name, title, buttonName, buttonType, children, isOpen, onClose, onSubmit}) {
 
   return (
         <>
@@ -8,7 +8,7 @@ export default function PopupWithForm ({ name, title, buttonName, buttonType, ch
 
             <form className={`popup__form popup__form_${name}`} name={name} noValidate>
               {children}
-              <button type="submit" className={`popup__button popup__${buttonType}-button submit-button`}>
+              <button type="submit" onSubmit={onSubmit} className={`popup__button popup__${buttonType}-button submit-button`}>
                 {buttonName}
               </button>
             </form>
