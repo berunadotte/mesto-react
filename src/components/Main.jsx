@@ -1,5 +1,4 @@
 import React from 'react';
-import { apiMesto } from '../utils/api.js';
 import Card from './Card.jsx';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
