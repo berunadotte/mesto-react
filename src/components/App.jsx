@@ -9,6 +9,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 import { apiMesto } from '../utils/api.js'
 import EditProfilePopup from './EditProfilePopup.jsx'
 import EditAvatarPopup from './EditAvatarPopup.jsx'
+import { AddPlacePopup } from './AddPlacePopup.jsx'
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -62,9 +63,7 @@ function App() {
   }
 
   function handleSubmit(request) {
-    //setIsLoading(true);
     request().then(closeAllPopup).catch(console.error)
-    //.finally(() => setIsLoading(false));
   }
 
   function handleUpdateUser(inputValues) {
@@ -83,11 +82,18 @@ function App() {
     handleSubmit(makeRequest)
   }
 
+  function handleAddPlaceSubmit(inputValues) {
+    function makeRequest() {
+      return apiMesto.addNewCardToServer(inputValues).then((newCard) => {
+        setCards([newCard, ...cards])
+      })
+    }
+    handleSubmit(makeRequest)
+  }
+
   function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id)
 
-    // Отправляем запрос в API и получаем обновлённые данные карточки
     apiMesto
       .changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
@@ -147,35 +153,11 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
         />
 
-        <PopupWithForm
-          title="Новое место"
-          name="new-card"
-          buttonName="Добавить"
-          buttonType="create"
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopup}
-        >
-          <input
-            type="text"
-            name="popup__card_name"
-            className="popup__input popup__input_card-name-value"
-            placeholder="Название"
-            required
-            minLength="2"
-            maxLength="30"
-            id="card-name-input"
-          />
-          <span className="popup__form-input-error card-name-input-error"></span>
-          <input
-            type="url"
-            name="popup__image_link"
-            className="popup__input popup__input_image-link-value"
-            placeholder="Ссылка на картинку"
-            required
-            id="image-link-input"
-          />
-          <span className="popup__form-input-error image-link-input-error"></span>
-        </PopupWithForm>
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         <PopupWithForm
           title="Вы уверены?"
