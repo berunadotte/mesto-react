@@ -37,7 +37,7 @@ export function Main({
             onClick={onEditAvatar}
             className="profile__edit-button"
             aria-label="кнопка редактирования"
-          ></button>
+          />
           <p className="profile__subtitle">{currentUser.about}</p>
         </div>
 

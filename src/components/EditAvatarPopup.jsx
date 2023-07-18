@@ -1,7 +1,12 @@
 import PopupWithForm from './PopupWithForm'
 import React from 'react'
 
-export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+export default function EditAvatarPopup({
+  isOpen,
+  onClose,
+  onUpdateAvatar,
+  isLoading,
+}) {
   const avatarRef = React.useRef()
 
   React.useEffect(() => {
@@ -20,7 +25,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     <PopupWithForm
       title="Обновить аватар"
       name="update_avatar"
-      buttonName="Сохранить"
+      buttonName={isLoading ? 'Сохранение...' : 'Сохранить'}
       buttonType="save"
       isOpen={isOpen}
       onClose={onClose}

@@ -12,6 +12,7 @@ import EditAvatarPopup from './EditAvatarPopup.jsx'
 import { AddPlacePopup } from './AddPlacePopup.jsx'
 
 function App() {
+  const [isLoading, setIsLoading] = React.useState(false)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false)
@@ -63,7 +64,8 @@ function App() {
   }
 
   function handleSubmit(request) {
-    request().then(closeAllPopup).catch(console.error)
+    setIsLoading(true)
+    request().then(closeAllPopup).catch(console.error).finally(() => setIsLoading(false))
   }
 
   function handleUpdateUser(inputValues) {
@@ -145,18 +147,21 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopup}
           onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopup}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopup}
           onAddPlace={handleAddPlaceSubmit}
+          isLoading={isLoading}
         />
 
         <PopupWithForm
